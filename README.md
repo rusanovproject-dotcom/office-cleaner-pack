@@ -25,7 +25,7 @@
 В терминале (внутри своего AI-офиса):
 
 ```bash
-git clone https://github.com/rusanovproject-dotcom/architect-of-order-pack.git _agent-packs/architect-of-order
+git clone https://github.com/rusanovproject-dotcom/office-cleaner-pack.git _agent-packs/architect-of-order
 ```
 
 В Claude Code:

@@ -25,20 +25,20 @@
 В терминале (внутри своего AI-офиса):
 
 ```bash
-git clone https://github.com/rusanovproject-dotcom/office-cleaner-pack.git _agent-packs/architect-of-order
+git clone https://github.com/rusanovproject-dotcom/office-cleaner-pack.git _agent-packs/office-cleaner
 ```
 
 В Claude Code:
 
 ```
-/install-agent architect-of-order
+/install-agent office-cleaner
 ```
 
 Что произойдёт автоматически:
-1. Файлы скопируются в `office/agents/architect-of-order/`
-2. Скилл `/office-architect` появится в `.claude/skills/`
+1. Файлы скопируются в `office/agents/office-cleaner/`
+2. Скилл `/office-cleaner` появится в `.claude/skills/`
 3. В `office/AGENTS.md` добавится строка про Риты
-4. В корневой `CLAUDE.md` появится `@office/agents/architect-of-order/core.md`
+4. В корневой `CLAUDE.md` появится `@office/agents/office-cleaner/core.md`
 5. Director получит роутинг — будет звать Риты на «проверь офис» / «наведи порядок» / «аудит»
 6. Старый скилл `/audit-project` (если был) переедет в архив — его триггеры теперь у Риты
 7. В `.claude/settings.json` появятся `deny`-правила на `.env*`, `*.pem`, опасные `Bash(rm:*)` — базовая защита для всего офиса
@@ -86,14 +86,14 @@ git clone https://github.com/rusanovproject-dotcom/office-cleaner-pack.git _agen
 ## Обновление
 
 ```bash
-cd _agent-packs/architect-of-order
+cd _agent-packs/office-cleaner
 git pull
 ```
 
 В Claude Code:
 
 ```
-/install-agent architect-of-order
+/install-agent office-cleaner
 ```
 
 **Твои данные не затрутся:**
@@ -101,14 +101,14 @@ git pull
 - `memory.md` / `failures.md` — остаются (накопленный опыт)
 - `office/ops/audits/` — все прошлые отчёты сохраняются
 
-Обновится только ядро: логика 6 архетипов, Florian-rubric, защиты, скилл `office-architect`.
+Обновится только ядро: логика 6 архетипов, Florian-rubric, защиты, скилл `office-cleaner`.
 
 ---
 
 ## Если что-то не работает
 
 - **«не могу установить»** — проверь что в офисе есть скилл `/install-agent` (приходит вместе с `client-office-template`). Если его нет — `git clone` всё равно сработал, ставь руками по `install.md`.
-- **«Рита не откликается на имя»** — проверь что в `office/AGENTS.md` есть строка про Риту, а в `office/agents/director/core.md` есть роутинг на `/office-architect` (с триггерами «рита» / «позови риту»). Если нет — переустанови (`/install-agent architect-of-order`).
+- **«Рита не откликается на имя»** — проверь что в `office/AGENTS.md` есть строка про Риту, а в `office/agents/director/core.md` есть роутинг на `/office-cleaner` (с триггерами «рита» / «позови риту»). Если нет — переустанови (`/install-agent office-cleaner`).
 - **«Рита отвечает «офис тормозит, попроси git add сначала»»** — у тебя uncommitted changes. Аудит на грязной копии = ложные finding'и про дрейф. Закоммить всё (`git add . && git commit`) → запускай заново.
 - **«Рита предложила снести что-то нужное»** — скажи «это load-bearing, не трогать». Она зафиксирует правило в `failures.md` и больше не предложит. Так она учится твоему офису.
 - **«Третий аудит подряд показывает одно и то же»** — значит fix'ы не применяются. Рита сама спросит: «либо ты не одобряешь, либо мы в разном понимании что чинить — расскажи?». Расскажи где именно затык.
@@ -119,7 +119,7 @@ git pull
 ## Что внутри (для тех кто заглянет под капот)
 
 ```
-architect-of-order/
+office-cleaner/
 ├── README.md / CLAUDE.md / install.md       ← документация и манифест
 ├── core.md                                  ← главный системный промпт (≤500 строк)
 ├── soul.md                                  ← душа: миссия, тон, чего не делает
@@ -132,7 +132,7 @@ architect-of-order/
     ├── auto-dream-rules.md                  ← правила memory cleanup (AutoDream)
     └── cleanup-anti-patterns.md             ← 10 защит от over-cleaning
 └── skills/
-    └── office-architect/SKILL.md            ← главный скилл: 5 фаз × 3 режима
+    └── office-cleaner/SKILL.md            ← главный скилл: 5 фаз × 3 режима
 ```
 
 Версия — `1.0.1`.

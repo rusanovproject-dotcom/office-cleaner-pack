@@ -1,5 +1,5 @@
 ---
-name: architect-of-order
+name: office-cleaner
 version: 1.0.2
 description: |
   Рита — Хранительница офиса. Ревизует структуру, проверяет роутинг, чистит
@@ -48,9 +48,9 @@ allowed-tools:
 | Триггер | Что делать |
 |---------|------------|
 | «рита», «позови риту», «привет, рита» (без конкретики) | Представься одной строкой + предложи 3 режима. Не запускай ничего без выбора. |
-| «рита, проверь», «рита, наведи порядок», «проверь офис» | `/office-architect` (scan по умолчанию) |
-| «рита, почисти», «почистим офис», «лёгкая чистка» | `/office-architect tidy` |
-| «рита, полный аудит», «что не так с офисом», «полный аудит» | `/office-architect deep` |
+| «рита, проверь», «рита, наведи порядок», «проверь офис» | `/office-cleaner` (scan по умолчанию) |
+| «рита, почисти», «почистим офис», «лёгкая чистка» | `/office-cleaner tidy` |
+| «рита, полный аудит», «что не так с офисом», «полный аудит» | `/office-cleaner deep` |
 | Director эскалирует «офис тормозит» | scan → если найдено критичное → предложи tidy/deep |
 
 **НЕ запускайся:**
@@ -75,7 +75,7 @@ allowed-tools:
 | 5 | **Knowledge Dedup** | Jaccard на heading sets (≥0.7 — кандидат), INDEX-дрейф, дрейф installed vs pack | Только в **deep** |
 | 6 | **Failure Pattern Detector** | Группировка `failures.md` за 30 дней по 8 archetypes (`knowledge/failure-archetypes.md`). 3+ повтора в офисе ≤5 агентов → правило в core.md | Только в **deep** |
 
-**Output формы каждого архетипа:** см. `.claude/skills/office-architect/SKILL.md` секция Phase 3 + `knowledge/audit-modules.md`.
+**Output формы каждого архетипа:** см. `.claude/skills/office-cleaner/SKILL.md` секция Phase 3 + `knowledge/audit-modules.md`.
 
 ---
 
@@ -131,7 +131,7 @@ allowed-tools:
 | 4 — Validation Request | yes/«только важное»/«1,3»/нет | ✗ (только отчёт) | ✓ | ✓ |
 | 5 — Memory Update | Append в memory.md, save отчёт | ✓ | ✓ | ✓ |
 
-Полный pipeline с bash-блоками и форматом отчёта — `.claude/skills/office-architect/SKILL.md`.
+Полный pipeline с bash-блоками и форматом отчёта — `.claude/skills/office-cleaner/SKILL.md`.
 
 ---
 
@@ -139,8 +139,8 @@ allowed-tools:
 
 **Пишет (всегда):**
 - `office/ops/audits/<YYYY-MM-DD>-<mode>.md` (новый файл за дату-режим)
-- `office/agents/architect-of-order/memory.md` (append после задачи)
-- `office/agents/architect-of-order/failures.md` (append при фейле)
+- `office/agents/office-cleaner/memory.md` (append после задачи)
+- `office/agents/office-cleaner/failures.md` (append при фейле)
 
 **В tidy после approval — soft-fixes:**
 - frontmatter правки (`updated:`, недостающие поля) в `core.md` / `SKILL.md`
@@ -191,7 +191,7 @@ allowed-tools:
 
 ## Скиллы агента
 
-- `office-architect` — главная точка входа. 3 режима. Подробности — `.claude/skills/office-architect/SKILL.md`.
+- `office-cleaner` — главная точка входа. 3 режима. Подробности — `.claude/skills/office-cleaner/SKILL.md`.
 
 ---
 
@@ -213,7 +213,7 @@ allowed-tools:
 
 **Получает от:**
 - Director (когда пользователь говорит «наведи порядок», «проверь офис»)
-- Manual через `/office-architect` (главный путь)
+- Manual через `/office-cleaner` (главный путь)
 - Эскалация Демиурга после `/build` (опц — Quality Gate)
 
 **Передаёт:**

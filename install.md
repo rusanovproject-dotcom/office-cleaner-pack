@@ -1,13 +1,13 @@
 # Рита — install manifest
 
-Машиночитаемые метаданные для установки пака через скилл `/install-agent architect-of-order`.
+Машиночитаемые метаданные для установки пака через скилл `/install-agent office-cleaner`.
 
 ---
 
 ## Metadata
 
 ```yaml
-agent_id: architect-of-order
+agent_id: office-cleaner
 agent_name_human: Рита — Хранительница офиса
 agent_name_in_chat: Рита
 short_role: |
@@ -42,14 +42,14 @@ trigger_keywords:
   - ревизия
   - стало мусорно
   - почему офис тормозит
-  - /office-architect
-  - /architect-scan
-  - /architect-tidy
-  - /architect-deep
-version: 1.0.2
+  - /office-cleaner
+  - /cleaner-scan
+  - /cleaner-tidy
+  - /cleaner-deep
+version: 1.1.0
 requires: []  # standalone agent — не зависит от других паков
 provides_pipeline:
-  - office-architect-pipeline  # 5 фаз: Inventory → Audit → Report → Approval → Memory Update
+  - office-cleaner-pipeline  # 5 фаз: Inventory → Audit → Report → Approval → Memory Update
 supersedes:
   - audit-project   # старый скилл `/audit-project` — install автоматически перенесёт его в `.claude/skills/_archive/audit-project-superseded/` (если ещё не перенесён)
 ```
@@ -58,27 +58,27 @@ supersedes:
 
 ## Files to copy
 
-Источник — `_agent-packs/architect-of-order/`, цель — `office/agents/architect-of-order/`. Копируется рекурсивно.
+Источник — `_agent-packs/office-cleaner/`, цель — `office/agents/office-cleaner/`. Копируется рекурсивно.
 
 ```yaml
 files:
   - src: core.md
-    dest: office/agents/architect-of-order/core.md
+    dest: office/agents/office-cleaner/core.md
   - src: soul.md
-    dest: office/agents/architect-of-order/soul.md
+    dest: office/agents/office-cleaner/soul.md
   - src: CLAUDE.md
-    dest: office/agents/architect-of-order/CLAUDE.md
+    dest: office/agents/office-cleaner/CLAUDE.md
   - src: overrides.md
-    dest: office/agents/architect-of-order/overrides.md
+    dest: office/agents/office-cleaner/overrides.md
     preserve_if_exists: true
   - src: memory.md
-    dest: office/agents/architect-of-order/memory.md
+    dest: office/agents/office-cleaner/memory.md
     preserve_if_exists: true
   - src: failures.md
-    dest: office/agents/architect-of-order/failures.md
+    dest: office/agents/office-cleaner/failures.md
     preserve_if_exists: true
   - src: knowledge/
-    dest: office/agents/architect-of-order/knowledge/
+    dest: office/agents/office-cleaner/knowledge/
     recursive: true
   - src: skills/
     dest: .claude/skills/
@@ -107,11 +107,11 @@ archive_skills:
     dest: .claude/skills/_archive/audit-project-superseded/
     if_exists: true
     add_deprecation_note: |
-      Этот скилл заменён на `/office-architect` (агент Рита).
+      Этот скилл заменён на `/office-cleaner` (агент Рита).
       Сохранён в архиве для истории. Не запускается.
     update_frontmatter:
       status: deprecated
-      superseded_by: office-architect
+      superseded_by: office-cleaner
       archived_on: <today>
 ```
 
@@ -172,7 +172,7 @@ settings_json:
 updates:
   - file: CLAUDE.md
     section: "## Обязательный layered include при старте"
-    add_line: "@office/agents/architect-of-order/core.md"
+    add_line: "@office/agents/office-cleaner/core.md"
 
   - file: office/AGENTS.md
     section: "## Активная команда"
@@ -186,29 +186,29 @@ updates:
 
   - file: office/agents/director/core.md
     section: "## Роутинг (knowledge/routing-patterns.md — расширенные паттерны)"
-    # Заменяем старую строку про /audit-project (Демиург) на новую про /office-architect (Рита).
+    # Заменяем старую строку про /audit-project (Демиург) на новую про /office-cleaner (Рита).
     # Старый вариант: "проверь офис" / "наведи порядок" / "есть дыры" / "аудит офиса" → Рита через /audit-project
     # `audit-project` устарел и архивируется (см. секцию `Pre-install`). Демиург по-прежнему делает /build (сборка нового агента),
     # но НЕ делает аудит — это теперь зона Риты.
     replace_line:
       match: '"проверь офис" / "наведи порядок" / "есть дыры" / "аудит офиса"'
       with: |
-        - "рита" / "позови риту" / "рита, проверь" / "рита, наведи порядок" / "проверь офис" / "наведи порядок" / "есть дыры" / "аудит" / "ревизия" / "стало мусорно" / "почему тормозит" → **Рита (Хранительница офиса)** через `/office-architect` (по умолчанию режим scan; «полный аудит» → deep, «почистим» → tidy)
+        - "рита" / "позови риту" / "рита, проверь" / "рита, наведи порядок" / "проверь офис" / "наведи порядок" / "есть дыры" / "аудит" / "ревизия" / "стало мусорно" / "почему тормозит" → **Рита (Хранительница офиса)** через `/office-cleaner` (по умолчанию режим scan; «полный аудит» → deep, «почистим» → tidy)
     add_rows: |
-      - "что не так с офисом" / "office audit" / "рита, полный аудит" → **Рита** через `/office-architect` (deep)
+      - "что не так с офисом" / "office audit" / "рита, полный аудит" → **Рита** через `/office-cleaner` (deep)
 
   - file: office/agents/director/knowledge/routing-patterns.md
     section: "## Core-роутинг"
-    # Заменяем строку про /audit-project (она была единственная про аудит) на три новые про /office-architect.
+    # Заменяем строку про /audit-project (она была единственная про аудит) на три новые про /office-cleaner.
     replace_row:
       match_contains: "/audit-project"
       with_rows: |
-        | "рита" / "позови риту" / "рита, проверь" / "проверь офис" / "наведи порядок" / "есть дыры" / "аудит" / "ревизия" / "стало мусорно" | **Рита (Хранительница офиса)** → `/office-architect` | scan по умолчанию (5 мин read-only); «полный аудит» / «что не так» → deep; «почистим» → tidy |
-        | "рита, почисти" / "почистим офис" / "лёгкая чистка" | **Рита** → `/office-architect tidy` | 15 мин под approval, soft-fixes только |
-        | "рита, полный аудит" / "полный аудит" / "deep audit" / "что не так с офисом" | **Рита** → `/office-architect deep` | 60 мин, все 6 архетипов + 8-мерная Florian-rubric |
+        | "рита" / "позови риту" / "рита, проверь" / "проверь офис" / "наведи порядок" / "есть дыры" / "аудит" / "ревизия" / "стало мусорно" | **Рита (Хранительница офиса)** → `/office-cleaner` | scan по умолчанию (5 мин read-only); «полный аудит» / «что не так» → deep; «почистим» → tidy |
+        | "рита, почисти" / "почистим офис" / "лёгкая чистка" | **Рита** → `/office-cleaner tidy` | 15 мин под approval, soft-fixes только |
+        | "рита, полный аудит" / "полный аудит" / "deep audit" / "что не так с офисом" | **Рита** → `/office-cleaner deep` | 60 мин, все 6 архетипов + 8-мерная Florian-rubric |
     # Уточняем существующее правило про Демиурга чтобы не было путаницы — он всё ещё делает /build, но не аудит.
     add_note_after_table: |
-      > **Что важно:** аудит офиса делает **Рита (Хранительница офиса)** через `/office-architect`, а не Демиург. Демиург остаётся ответственным за `/build` (сборка новых агентов) и реорганизацию структуры по запросу. Если пользователь говорит «рита» / «аудит» / «проверь офис» — роут на Риту.
+      > **Что важно:** аудит офиса делает **Рита (Хранительница офиса)** через `/office-cleaner`, а не Демиург. Демиург остаётся ответственным за `/build` (сборка новых агентов) и реорганизацию структуры по запросу. Если пользователь говорит «рита» / «аудит» / «проверь офис» — роут на Риту.
 ```
 
 ---
@@ -260,7 +260,7 @@ updates:
 first_task:
   suggestion: "быстрый осмотр офиса"
   why: "5 минут, ничего не трогает — увидишь актуальную картину структуры и где что просаживается. После сможешь решить что чинить."
-  skill: office-architect
+  skill: office-cleaner
   trigger_phrase: "рита, проверь офис"
   mode: scan
   safety_note: "режим осмотра — только смотрю, ничего не трогаю"
@@ -274,22 +274,22 @@ first_task:
 
 ## Uninstall (future)
 
-Для будущей поддержки `/uninstall-agent architect-of-order`:
+Для будущей поддержки `/uninstall-agent office-cleaner`:
 
 ```yaml
 uninstall:
   remove_folders:
-    - office/agents/architect-of-order/
-    - .claude/skills/office-architect/
+    - office/agents/office-cleaner/
+    - .claude/skills/office-cleaner/
   remove_lines_from:
     - path: office/AGENTS.md
       match: "**Рита**"
     - path: CLAUDE.md
-      match: "@office/agents/architect-of-order/core.md"
+      match: "@office/agents/office-cleaner/core.md"
     - path: office/agents/director/core.md
       match: "**Рита**"
     - path: office/agents/director/knowledge/routing-patterns.md
-      match: "/office-architect"
+      match: "/office-cleaner"
   preserve:
     - office/ops/audits/   # история аудитов — клиентские данные, не трогать
     - .claude/settings.json   # защита `.env*` нужна другим агентам тоже

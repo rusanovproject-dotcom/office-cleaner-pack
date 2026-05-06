@@ -87,7 +87,7 @@
 | Active client (≥3 sessions/week) | `>=72h && >=3 sessions` | 8-10 мин |
 | Sporadic (<3 sessions/week) | `>=168h (7 days) && >=2 sessions` | 5-8 мин |
 
-**В клиентском шаблоне:** Рита использует **manual trigger** через `/office-architect` — клиент сам решает когда. Cron / hook не имплементируется в MVP.
+**В клиентском шаблоне:** Рита использует **manual trigger** через `/office-cleaner` — клиент сам решает когда. Cron / hook не имплементируется в MVP.
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: office-architect
+name: office-cleaner
 description: |
   Рита — Хранительница офиса. Главная точка входа: scan (5 мин read-only inventory),
   tidy (15 мин soft-fixes под approval), deep (60 мин полный аудит по 6 архетипам
@@ -10,8 +10,8 @@ description: |
   "рита, почисти", "рита, полный аудит", "ритуся", "хранительница", "хранительница офиса",
   "наведи порядок", "проверь офис", "office audit", "что не так с офисом",
   "почистим офис", "ревизия офиса", "стало мусорно", "почему офис тормозит",
-  "смотритель", "/office-architect", "/architect-scan",
-  "/architect-tidy", "/architect-deep"
+  "смотритель", "/office-cleaner", "/cleaner-scan",
+  "/cleaner-tidy", "/cleaner-deep"
 
   ANTI-TRIGGERS: "новый агент" / "собери помощника" → /build (Демиург);
   "настрой офис первый раз" → /setup;
@@ -41,7 +41,7 @@ allowed-tools:
 effort: high
 ---
 
-# /office-architect — Универсальный аудит и чистка AI-офиса
+# /office-cleaner — Универсальный аудит и чистка AI-офиса
 
 Рита смотрит на готовый офис и выдаёт диагностический отчёт по 6 направлениям. Что хорошо, что плохо, что средне. Дальше — план улучшений с приоритизацией.
 
@@ -70,7 +70,7 @@ effort: high
 ## Аргументы
 
 ```
-/office-architect [mode] [path]
+/office-cleaner [mode] [path]
 
 mode (опц):
   scan         — 5 мин, read-only (DEFAULT)
@@ -84,9 +84,9 @@ path (опц):
 ```
 
 Примеры:
-- `/office-architect` → scan текущего офиса
-- `/office-architect tidy` → лёгкая чистка
-- `/office-architect deep client-office-template` → полный аудит шаблона
+- `/office-cleaner` → scan текущего офиса
+- `/office-cleaner tidy` → лёгкая чистка
+- `/office-cleaner deep client-office-template` → полный аудит шаблона
 
 ---
 
@@ -153,7 +153,7 @@ Surface-уровень всех 6 архетипов уборщиков. Тол�
 - M2 Skill Auditor: hardcoded secrets, oversize core.md (>300 строк), отсутствие frontmatter
 - M6 Failure Detector: все `failures.md` пусты при работающем офисе >7 дней
 
-Остальные архетипы — отметить «не запускался в scan-режиме, для полного запусти `/office-architect deep`».
+Остальные архетипы — отметить «не запускался в scan-режиме, для полного запусти `/office-cleaner deep`».
 
 #### tidy (15 мин cap)
 
@@ -300,7 +300,7 @@ scan + детальный M1 (Memory Cleaner) + M4 (Structure Linter) + гото
 
 После cycle (даже если в Phase 4 было `нет`):
 
-1. **Append в `office/agents/architect-of-order/memory.md`** под секции:
+1. **Append в `office/agents/office-cleaner/memory.md`** под секции:
    - **Decisions** — какие правила применил, почему
    - **Patterns** — что заметил в этом офисе («пользователь любит когда findings со score»)
    - **Context** — что помнить о специфике (PARA, symlinks, особые файлы)
@@ -321,8 +321,8 @@ scan + детальный M1 (Memory Cleaner) + M4 (Structure Linter) + гото
 
 **Пишет:**
 - `office/ops/audits/YYYY-MM-DD-<mode>.md` (всегда, новый файл за дату-режим)
-- `office/agents/architect-of-order/memory.md` (append после задачи)
-- `office/agents/architect-of-order/failures.md` (append при фейле)
+- `office/agents/office-cleaner/memory.md` (append после задачи)
+- `office/agents/office-cleaner/failures.md` (append при фейле)
 
 **В tidy после approval:**
 - frontmatter в `office/agents/*/core.md`, `.claude/skills/*/SKILL.md`
@@ -375,7 +375,7 @@ scan + детальный M1 (Memory Cleaner) + M4 (Structure Linter) + гото
 
 ## Пример Input → Output
 
-**Input:** `/office-architect deep`
+**Input:** `/office-cleaner deep`
 
 ```
 → Phase 1 (28 секунд):

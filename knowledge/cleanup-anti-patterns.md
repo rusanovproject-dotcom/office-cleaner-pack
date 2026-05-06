@@ -21,7 +21,7 @@
 > «Versions belong to the store (not the individual memory) and survive even after the memory itself is deleted.»
 > «Archiving makes a store read-only and prevents it from being attached to new sessions. Archiving is one-way; there is no unarchive.»
 
-**Правила Архитектора:**
+**Правила Риты:**
 1. **Append-only > delete.** Старые версии в `_archive/<YYYY-MM-DD>/` с датой. Не stomp.
 2. **Soft-delete + redact.** Move в `_archive/`, не `rm`. Если PII — `[REDACTED]` в отчёте.
 3. **Двойная защита:** allowed-tools НЕ содержит `Write`, `Bash(rm:*)`, `Bash(mv:*)`. Settings.json deny-rule на `Edit(.env*)`, `Bash(rm:*)`.
@@ -39,7 +39,7 @@
 - `_template/`, `_template-audience/` — два разных шаблона, не дубль (хотя пересекаются)
 - Memory у Demiurg в другом формате чем у Director — намеренно (Demiurg специфический)
 
-**Правила Архитектора:**
+**Правила Риты:**
 1. **Section "Looks bad but is actually fine" обязательна** в каждом отчёте. Если пуста → отчёт FAIL, не сохраняется. Это форсирует thinking.
 2. **Auto-fix только для one-clear-correct-fix.** Tier-1 findings: frontmatter правки, datestamps, INDEX.md обновления. Всё остальное — рекомендация в отчёте.
 3. **Approval gate (Phase 4).** Никаких изменений без явного yes / «только важное» / «1,3» / нет.
@@ -49,7 +49,7 @@
 
 Из failure-таксономий — **looping** самый частый failure-mode. Уборщик может застрять в цикле «нашёл противоречие → попытался разрешить → создал новое противоречие → снова нашёл».
 
-**Правила Архитектора:**
+**Правила Риты:**
 1. **Hard cap на время.** scan ≤5 мин, tidy ≤15 мин, deep ≤60 мин. AutoDream rule: 8-10 минут на цикл.
 2. **Hard cap на iterations.** Не >3 проходов по одному файлу.
 3. **Idempotency check.** Если после уборки следующий запуск находит то же самое — выходим, отчёт идентичен → строка `## Note: idempotent — same findings as <date>. No new issues.`
@@ -59,8 +59,8 @@
 
 Уборщик читает 200 файлов и захламляет окно — после него у основного агента нет места думать.
 
-**Правила Архитектора:**
-1. **Dedicated subagent.** Архитектор — отдельный агент с собственным окном.
+**Правила Риты:**
+1. **Dedicated subagent.** Рита — отдельный агент с собственным окном.
 2. **Возвращать только summary.** Не дамп прочитанного — только findings + counts.
 3. **Phase 1 inventory bash-only через метаданные.** Не читать содержимое файлов — только `wc -l`, `head -1`, `find`. Это укладывается в ≤30 сек и в небольшой context budget.
 4. **Compact каждые N findings.** Если deep-режим — после M3 (Routing) и M5 (Knowledge) — checkpoint и compact если >40% контекста.
@@ -69,17 +69,17 @@
 
 Generic-аудитор не знает специфики офиса. Например, `failures.md` намеренно append-only, и большой размер — это feature.
 
-**Правила Архитектора:**
-1. **Exemptions через frontmatter.** Файл может объявить `audit-rules: skip-size-check`, `audit-rules: load-bearing` — и Архитектор пропускает соответствующие чеки.
+**Правила Риты:**
+1. **Exemptions через frontmatter.** Файл может объявить `audit-rules: skip-size-check`, `audit-rules: load-bearing` — и Рита пропускает соответствующие чеки.
 2. **Project-specific config.** `.skill-policy.yml` (Skills Check) или `office/_audit-config.md` — переопределяют глобальные правила.
 3. **Tech-debt-skill правило:** «Don't pattern-match to generic best practices without grounding in this specific repo.»
-4. **`overrides.md`** Архитектора — пользователь пишет «не флагить failures.md size», и Архитектор уважает.
+4. **`overrides.md`** Риты — пользователь пишет «не флагить failures.md size», и Рита уважает.
 
 ### 6. Privacy violations (бонус — критично!)
 
 Уборщик читает все файлы и попадается на секреты в логах.
 
-**Правила Архитектора:**
+**Правила Риты:**
 1. **Skip patterns.** Не читать `.env*`, `*.pem`, `credentials*`, `secrets*` — уборщику они не нужны.
 2. **Redact в отчёте.** Если нашёл что-то похожее на токен — в отчёте `[REDACTED-TOKEN-LIKE-STRING]`, не сам токен.
 3. **Settings.json deny.** `Edit(.env*)`, `Read(.env*)` — deny rule.

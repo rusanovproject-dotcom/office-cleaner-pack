@@ -37,10 +37,10 @@ git clone https://github.com/rusanovproject-dotcom/architect-of-order-pack.git _
 Что произойдёт автоматически:
 1. Файлы скопируются в `office/agents/architect-of-order/`
 2. Скилл `/office-architect` появится в `.claude/skills/`
-3. В `office/AGENTS.md` добавится строка про Архитектора офиса
+3. В `office/AGENTS.md` добавится строка про Риты
 4. В корневой `CLAUDE.md` появится `@office/agents/architect-of-order/core.md`
-5. Director получит роутинг — будет звать Архитектора на «проверь офис» / «наведи порядок» / «аудит»
-6. Старый скилл `/audit-project` (если был) переедет в архив — его триггеры теперь у Архитектора
+5. Director получит роутинг — будет звать Риты на «проверь офис» / «наведи порядок» / «аудит»
+6. Старый скилл `/audit-project` (если был) переедет в архив — его триггеры теперь у Риты
 7. В `.claude/settings.json` появятся `deny`-правила на `.env*`, `*.pem`, опасные `Bash(rm:*)` — базовая защита для всего офиса
 8. Создастся папка `office/ops/audits/` под отчёты
 

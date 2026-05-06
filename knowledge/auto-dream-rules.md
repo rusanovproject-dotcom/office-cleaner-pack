@@ -2,7 +2,7 @@
 
 **Источник:** `zenvanriel.com/ai-engineer-blog/claude-code-autodream-memory-consolidation-guide/`. AutoDream — background sub-agent в Claude Code, который консолидирует MEMORY.md между сессиями, имитируя биологическую консолидацию памяти во время REM-сна.
 
-**Зачем здесь:** Memory Cleaner (Модуль 1 Архитектора) реализует те же 4 категории чистки что AutoDream + adjusted thresholds для клиентского профиля.
+**Зачем здесь:** Memory Cleaner (Модуль 1 Риты) реализует те же 4 категории чистки что AutoDream + adjusted thresholds для клиентского профиля.
 
 ---
 
@@ -47,7 +47,7 @@
 
 **Правило:** конвертировать в ISO YYYY-MM-DD. Если контекст потерян — пометить `[date unclear, ~mid-April]` или удалить.
 
-В tidy-режиме это **safe auto-fix** (one-clear-correct-fix) — Архитектор может править `yesterday` → ISO с подтверждением даты у пользователя.
+В tidy-режиме это **safe auto-fix** (one-clear-correct-fix) — Рита может править `yesterday` → ISO с подтверждением даты у пользователя.
 
 ### 4. Outdated Debugging Notes — мёртвые ссылки
 
@@ -87,7 +87,7 @@
 | Active client (≥3 sessions/week) | `>=72h && >=3 sessions` | 8-10 мин |
 | Sporadic (<3 sessions/week) | `>=168h (7 days) && >=2 sessions` | 5-8 мин |
 
-**В клиентском шаблоне:** Архитектор-Порядка использует **manual trigger** через `/office-architect` — клиент сам решает когда. Cron / hook не имплементируется в MVP.
+**В клиентском шаблоне:** Рита использует **manual trigger** через `/office-architect` — клиент сам решает когда. Cron / hook не имплементируется в MVP.
 
 ---
 

@@ -1,4 +1,4 @@
-# Архитектор-Порядка — Failures
+# Рита — Failures
 
 Append-only. Пишу сам когда промахнулся: предложил снести load-bearing, не заметил dup, missed collision. Старые записи не трогаю — это мой опыт.
 

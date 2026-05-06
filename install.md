@@ -1,4 +1,4 @@
-# Architect of Order — install manifest
+# Рита — install manifest
 
 Машиночитаемые метаданные для установки пака через скилл `/install-agent architect-of-order`.
 
@@ -42,15 +42,11 @@ trigger_keywords:
   - ревизия
   - стало мусорно
   - почему офис тормозит
-  - архитектор офиса
-  - архитектор-порядка
-  - architect of order
-  - office architect
   - /office-architect
   - /architect-scan
   - /architect-tidy
   - /architect-deep
-version: 1.0.1
+version: 1.0.2
 requires: []  # standalone agent — не зависит от других паков
 provides_pipeline:
   - office-architect-pipeline  # 5 фаз: Inventory → Audit → Report → Approval → Memory Update
@@ -88,7 +84,7 @@ files:
     dest: .claude/skills/
     recursive: true
 
-# Обязательная папка для отчётов аудитов — Архитектор пишет только сюда.
+# Обязательная папка для отчётов аудитов — Рита пишет только сюда.
 folders:
   - dest: office/ops/audits/
     create_if_missing: true
@@ -103,7 +99,7 @@ folders:
 
 ## Pre-install: archive superseded skills
 
-**Перед копированием** проверь и перенеси устаревшие скиллы которые дублируют функционал Архитектора:
+**Перед копированием** проверь и перенеси устаревшие скиллы которые дублируют функционал Риты:
 
 ```yaml
 archive_skills:
@@ -111,7 +107,7 @@ archive_skills:
     dest: .claude/skills/_archive/audit-project-superseded/
     if_exists: true
     add_deprecation_note: |
-      Этот скилл заменён на `/office-architect` (агент Архитектор-Порядка).
+      Этот скилл заменён на `/office-architect` (агент Рита).
       Сохранён в архиве для истории. Не запускается.
     update_frontmatter:
       status: deprecated
@@ -121,13 +117,13 @@ archive_skills:
 
 Если папка `.claude/skills/audit-project/` отсутствует (уже заархивирована или никогда не существовала) — пропускаем шаг без ошибки.
 
-После архивации install-agent сообщает в post-install: *«Старый скилл `/audit-project` переехал в архив, его триггеры теперь у Архитектора офиса.»*
+После архивации install-agent сообщает в post-install: *«Старый скилл `/audit-project` переехал в архив, его триггеры теперь у Риты.»*
 
 ---
 
 ## Critical security: enforce settings.json
 
-**Файл `.claude/settings.json` ОБЯЗАТЕЛЕН для установки этого агента.** Архитектор имеет в `allowed-tools` `Read`/`Edit` без узкого scope — единственная реальная защита `.env*` и других секретов идёт через `permissions.deny` в settings.json.
+**Файл `.claude/settings.json` ОБЯЗАТЕЛЕН для установки этого агента.** Рита имеет в `allowed-tools` `Read`/`Edit` без узкого scope — единственная реальная защита `.env*` и других секретов идёт через `permissions.deny` в settings.json.
 
 ```yaml
 settings_json:
@@ -190,10 +186,10 @@ updates:
 
   - file: office/agents/director/core.md
     section: "## Роутинг (knowledge/routing-patterns.md — расширенные паттерны)"
-    # Заменяем старую строку про /audit-project (Демиург) на новую про /office-architect (Архитектор офиса).
-    # Старый вариант: "проверь офис" / "наведи порядок" / "есть дыры" / "аудит офиса" → Архитектор через /audit-project
+    # Заменяем старую строку про /audit-project (Демиург) на новую про /office-architect (Рита).
+    # Старый вариант: "проверь офис" / "наведи порядок" / "есть дыры" / "аудит офиса" → Рита через /audit-project
     # `audit-project` устарел и архивируется (см. секцию `Pre-install`). Демиург по-прежнему делает /build (сборка нового агента),
-    # но НЕ делает аудит — это теперь зона Архитектора-Порядка.
+    # но НЕ делает аудит — это теперь зона Риты.
     replace_line:
       match: '"проверь офис" / "наведи порядок" / "есть дыры" / "аудит офиса"'
       with: |
@@ -287,11 +283,11 @@ uninstall:
     - .claude/skills/office-architect/
   remove_lines_from:
     - path: office/AGENTS.md
-      match: "**Архитектор офиса**"
+      match: "**Рита**"
     - path: CLAUDE.md
       match: "@office/agents/architect-of-order/core.md"
     - path: office/agents/director/core.md
-      match: "**Архитектор офиса**"
+      match: "**Рита**"
     - path: office/agents/director/knowledge/routing-patterns.md
       match: "/office-architect"
   preserve:
@@ -299,5 +295,5 @@ uninstall:
     - .claude/settings.json   # защита `.env*` нужна другим агентам тоже
     - .claude/skills/_archive/   # деприкейтед скиллы
   warn:
-    - "Удаление Архитектора офиса не возвращает /audit-project — он остаётся в архиве. Если хочешь старый скилл обратно — ручной revive из .claude/skills/_archive/audit-project-superseded/."
+    - "Удаление Риты не возвращает /audit-project — он остаётся в архиве. Если хочешь старый скилл обратно — ручной revive из .claude/skills/_archive/audit-project-superseded/."
 ```

@@ -5,7 +5,7 @@
 - MindStudio «6 Ways Agents Fail» (`https://www.mindstudio.ai/blog/ai-agent-failure-pattern-recognition`)
 - Partnership on AI «Real-Time Failure Detection in Agents»
 
-**Зачем здесь:** Failure Pattern Detector (Модуль 6 Архитектора) использует эти archetypes как словарь для группировки записей в `failures.md` агентов. Если 3+ записей в офисе ≤5 агентов (или 5+ для большего) попадают в один archetype за 30 дней — предложение перенести правило в `core.md` агента.
+**Зачем здесь:** Failure Pattern Detector (Модуль 6 Риты) использует эти archetypes как словарь для группировки записей в `failures.md` агентов. Если 3+ записей в офисе ≤5 агентов (или 5+ для большего) попадают в один archetype за 30 дней — предложение перенести правило в `core.md` агента.
 
 ---
 
@@ -75,7 +75,7 @@
 - «correctional prompts не дают результат»
 - «итерации Validator → Refiner без сходимости»
 
-**Правило:** **2 fails — стоп**. Останавливаюсь, говорю «две попытки не сработали, подхожу иначе». Hard cap на iterations (Validator: max 2 раунда Refiner; Архитектор: max 3 прохода по одному файлу).
+**Правило:** **2 fails — стоп**. Останавливаюсь, говорю «две попытки не сработали, подхожу иначе». Hard cap на iterations (Validator: max 2 раунда Refiner; Рита: max 3 прохода по одному файлу).
 
 ### 7. Last-mile execution failures
 
@@ -101,7 +101,7 @@
 
 ---
 
-## Как Архитектор использует эти archetypes
+## Как Рита использует эти archetypes
 
 В deep-режиме Failure Pattern Detector:
 
